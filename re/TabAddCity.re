@@ -1,9 +1,5 @@
 open ReactNative;
 
-/*
- import { Button } from 'react-native-elements';
- import { addCity, updateAsyncStorage } from '../../actions/citiesActions';
- import { connect } from 'react-redux'; */
 let windowWidth = (Dimensions.get `window)##width;
 
 let styles =
@@ -53,21 +49,9 @@ let setNameRef theRef {ReasonReact.state: state} => state.nameRef := Js.Null.to_
 
 let component = ReasonReact.reducerComponentWithRetainedProps "TabAddCity";
 
-/*
- submit = () => {
-      if (!this.state.input['country'] || !this.state.input['name']) return
-      const { dispatchAddCity } = this.props;
-      dispatchAddCity(this.state.input)
-      this.setState({ input: {} }, () => {
-        this.props.dispatchUpdateAsyncStorage();
-      })
-      this.nameRef.focus()
-    }
-    */
 let make ::dispatchAddCity ::dispatchUpdateAsyncStorage _children => {
   ...component,
   initialState: fun () => {input: {name: "", country: ""}, nameRef: ref None},
-  /* retainedProps: {dispatchAddCity: Js.t { city: string, country: string}, dispatchUpdateAsyncStorage: int => int}, */
   retainedProps: {dispatchAddCity, dispatchUpdateAsyncStorage},
   reducer: fun action state =>
     switch action {
@@ -87,8 +71,7 @@ let make ::dispatchAddCity ::dispatchUpdateAsyncStorage _children => {
               ()
             }
           )
-          /* ReasonReact.Update state */
-      };
+      }
     },
   render: fun self =>
     <View style=styles##container>
@@ -101,7 +84,6 @@ let make ::dispatchAddCity ::dispatchUpdateAsyncStorage _children => {
       <TextInput
         ref=(self.handle setNameRef)
         value=self.state.input.name
-        /* onChangeText={(value) => this.updateInput('name', value)} */
         onChangeText=(self.reduce (fun value => ChangeCity value))
         style=styles##textInput
         placeholder="City name"
@@ -110,7 +92,6 @@ let make ::dispatchAddCity ::dispatchUpdateAsyncStorage _children => {
       />
       <TextInput
         value=self.state.input.country
-        /* onChangeText={(value) => this.updateInput('country', value)} */
         onChangeText=(self.reduce (fun value => ChangeCountry value))
         style=styles##textInput
         placeholder="Country name"
@@ -136,10 +117,3 @@ let tabAddCity =
           dispatchUpdateAsyncStorage::jsProps##dispatchUpdateAsyncStorage
           [||]
     );
-/*
-   const mapDispatchToProps = (dispatch) => ({
-     dispatchAddCity: (city) => dispatch(addCity(city)),
-     dispatchUpdateAsyncStorage: () => dispatch(updateAsyncStorage()),
-   });
-
-   export default connect(null, mapDispatchToProps)(CitiesTab) */

@@ -7,6 +7,15 @@ import CitiesTab from './tabs/Cities/CitiesTab';
 // import AddCityTab from './tabs/AddCity/AddCityTab';
 import { tabAddCity } from '../lib/js/re/tabAddCity';
 
+// TODO move somewhere else
+import { addCity, updateAsyncStorage } from './actions/citiesActions';
+import { connect } from 'react-redux';
+const mapDispatchToProps = (dispatch) => ({
+  dispatchAddCity: (city) => dispatch(addCity(city)),
+  dispatchUpdateAsyncStorage: () => dispatch(updateAsyncStorage()),
+});
+const tabAddCityConnected =  connect(null, mapDispatchToProps)(tabAddCity)
+
 const TabConfig = {
   CitiesTab: {
     screen: CitiesTab,
@@ -22,7 +31,7 @@ const TabConfig = {
   },
   AddCityTab: {
     // screen: AddCityTab,
-    screen: tabAddCity,
+    screen: tabAddCityConnected,
     navigationOptions: {
       tabBarLabel: 'Add City',
       tabBarIcon: ({ tintColor }) => (
