@@ -4,7 +4,8 @@ import { Text, View, Image, StyleSheet } from 'react-native';
 import { StackNavigator, TabNavigator } from 'react-navigation';
 
 import CitiesTab from './tabs/Cities/CitiesTab';
-import AddCityTab from './tabs/AddCity/AddCityTab';
+// import AddCityTab from './tabs/AddCity/AddCityTab';
+import { tabAddCity } from '../lib/js/re/tabAddCity';
 
 const TabConfig = {
   CitiesTab: {
@@ -20,7 +21,8 @@ const TabConfig = {
     }
   },
   AddCityTab: {
-    screen: AddCityTab,
+    // screen: AddCityTab,
+    screen: tabAddCity,
     navigationOptions: {
       tabBarLabel: 'Add City',
       tabBarIcon: ({ tintColor }) => (
