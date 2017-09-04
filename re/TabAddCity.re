@@ -35,7 +35,7 @@ type action =
   | Submit;
 
 type input = {
-  city: string,
+  name: string,
   country: string
 };
 
@@ -45,7 +45,7 @@ type state = {
 };
 
 type retainedProps = {
-  dispatchAddCity: Js.t {. city : string, country : string} => unit,
+  dispatchAddCity: Js.t {. name : string, country : string} => unit,
   dispatchUpdateAsyncStorage: unit => unit
 };
 
@@ -66,23 +66,23 @@ let component = ReasonReact.reducerComponentWithRetainedProps "TabAddCity";
     */
 let make ::dispatchAddCity ::dispatchUpdateAsyncStorage _children => {
   ...component,
-  initialState: fun () => {input: {city: "", country: ""}, nameRef: ref None},
+  initialState: fun () => {input: {name: "", country: ""}, nameRef: ref None},
   /* retainedProps: {dispatchAddCity: Js.t { city: string, country: string}, dispatchUpdateAsyncStorage: int => int}, */
   retainedProps: {dispatchAddCity, dispatchUpdateAsyncStorage},
   reducer: fun action state =>
     switch action {
-    | ChangeCity city => ReasonReact.Update {...state, input: {...state.input, city}}
+    | ChangeCity name => ReasonReact.Update {...state, input: {...state.input, name}}
     | ChangeCountry country => ReasonReact.Update {...state, input: {...state.input, country}}
     | Submit =>
       let {input} = state;
-      switch (input.city, input.country) {
+      switch (input.name, input.country) {
       | ("", "") => ReasonReact.NoUpdate
-      | (city, country) =>
+      | (name, country) =>
         ReasonReact.UpdateWithSideEffects
-          {...state, input: {city: "", country: ""}}
+          {...state, input: {name: "", country: ""}}
           (
             fun self => {
-              self.retainedProps.dispatchAddCity {"city": city, "country": country};
+              self.retainedProps.dispatchAddCity {"name": name, "country": country};
               self.retainedProps.dispatchUpdateAsyncStorage ();
               ()
             }
@@ -100,7 +100,7 @@ let make ::dispatchAddCity ::dispatchUpdateAsyncStorage _children => {
       />
       <TextInput
         ref=(self.handle setNameRef)
-        value=self.state.input.city
+        value=self.state.input.name
         /* onChangeText={(value) => this.updateInput('name', value)} */
         onChangeText=(self.reduce (fun value => ChangeCity value))
         style=styles##textInput
