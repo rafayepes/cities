@@ -5,7 +5,7 @@ import { StackNavigator, TabNavigator } from 'react-navigation';
 
 import CitiesTab from './tabs/Cities/CitiesTab';
 // import AddCityTab from './tabs/AddCity/AddCityTab';
-import { tabAddCity } from '../lib/js/re/tabAddCity';
+import tabAddCity from '../lib/js/re/tabAddCity';
 
 // TODO move somewhere else
 import { addCity, updateAsyncStorage } from './actions/citiesActions';

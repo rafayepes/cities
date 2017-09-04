@@ -111,7 +111,7 @@ let make ::dispatchAddCity ::dispatchUpdateAsyncStorage _children => {
     </View>
 };
 
-let tabAddCity =
+let default =
   ReasonReact.wrapReasonForJs
     ::component
     (
@@ -121,3 +121,5 @@ let tabAddCity =
           dispatchUpdateAsyncStorage::jsProps##dispatchUpdateAsyncStorage
           [||]
     );
+
+let __esModule = true;
