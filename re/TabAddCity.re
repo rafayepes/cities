@@ -68,6 +68,10 @@ let make ::dispatchAddCity ::dispatchUpdateAsyncStorage _children => {
             fun self => {
               self.retainedProps.dispatchAddCity {"name": name, "country": country};
               self.retainedProps.dispatchUpdateAsyncStorage ();
+              switch !self.state.nameRef {
+              | None => ()
+              | Some nameRef => (ReasonReact.refToJsObj nameRef)##focus ()
+              };
               ()
             }
           )
