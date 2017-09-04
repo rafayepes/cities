@@ -931,6 +931,16 @@ browser-resolve@^1.11.2:
   dependencies:
     resolve "1.1.7"
 
+bs-platform@^1.9.1:
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/bs-platform/-/bs-platform-1.9.1.tgz#1195562f0f8b131cc758693e7c9b31d7e0022001"
+
+bs-react-native@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/bs-react-native/-/bs-react-native-0.2.0.tgz#640da5f02703919d5f75c7074ea85ef679aa8967"
+  dependencies:
+    reason-react "^0.2.4"
+
 bser@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/bser/-/bser-1.0.2.tgz#381116970b2a6deea5646dd15dd7278444b56169"
@@ -1189,7 +1199,7 @@ crc@3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/crc/-/crc-3.3.0.tgz#fa622e1bc388bf257309082d6b65200ce67090ba"
 
-create-react-class@^15.5.2, create-react-class@^15.5.3:
+create-react-class@^15.5.2, create-react-class@^15.5.3, create-react-class@^15.6.0:
   version "15.6.0"
   resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.6.0.tgz#ab448497c26566e1e29413e883207d57cfe7bed4"
   dependencies:
@@ -3129,6 +3139,15 @@ react-devtools-core@2.3.1:
     shell-quote "^1.6.1"
     ws "^2.0.3"
 
+react-dom@>=15.0.0:
+  version "15.6.1"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.6.1.tgz#2cb0ed4191038e53c209eb3a79a23e2a4cf99470"
+  dependencies:
+    fbjs "^0.8.9"
+    loose-envify "^1.1.0"
+    object-assign "^4.1.0"
+    prop-types "^15.5.10"
+
 react-native-dismiss-keyboard@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/react-native-dismiss-keyboard/-/react-native-dismiss-keyboard-1.0.0.tgz#32886242b3f2317e121f3aeb9b0a585e2b879b49"
@@ -3328,6 +3347,16 @@ react@16.0.0-alpha.12:
     object-assign "^4.1.0"
     prop-types "^15.5.6"
 
+react@>=15.0.0:
+  version "15.6.1"
+  resolved "https://registry.yarnpkg.com/react/-/react-15.6.1.tgz#baa8434ec6780bde997cdc380b79cd33b96393df"
+  dependencies:
+    create-react-class "^15.6.0"
+    fbjs "^0.8.9"
+    loose-envify "^1.1.0"
+    object-assign "^4.1.0"
+    prop-types "^15.5.10"
+
 read-pkg-up@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/read-pkg-up/-/read-pkg-up-1.0.1.tgz#9d63c13276c065918d57f002a57f40a1b643fb02"
@@ -3363,6 +3392,13 @@ readable-stream@~1.1.8, readable-stream@~1.1.9:
     inherits "~2.0.1"
     isarray "0.0.1"
     string_decoder "~0.10.x"
+
+reason-react@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/reason-react/-/reason-react-0.2.4.tgz#96d85a533fc93e695818dbb3e6a8ae05fbf0de7d"
+  dependencies:
+    react ">=15.0.0"
+    react-dom ">=15.0.0"
 
 rebound@^0.0.13:
   version "0.0.13"
