@@ -1,10 +1,10 @@
 open ReactNative;
 
 /*
-   import { Button } from 'react-native-elements';
-   import { addCity, updateAsyncStorage } from '../../actions/citiesActions';
-   import { connect } from 'react-redux'; */
-let windowWidth = ((Dimensions.get `window)##width);
+ import { Button } from 'react-native-elements';
+ import { addCity, updateAsyncStorage } from '../../actions/citiesActions';
+ import { connect } from 'react-redux'; */
+let windowWidth = (Dimensions.get `window)##width;
 
 let styles =
   StyleSheet.create
@@ -31,7 +31,8 @@ let styles =
 
 type action =
   | ChangeCity string
-  | ChangeCountry string;
+  | ChangeCountry string
+  | Submit;
 
 type input = {
   city: string,
@@ -43,17 +44,51 @@ type state = {
   nameRef: ref (option ReasonReact.reactRef)
 };
 
+type retainedProps = {
+  dispatchAddCity: Js.t {. city : string, country : string} => unit,
+  dispatchUpdateAsyncStorage: unit => unit
+};
+
 let setNameRef theRef {ReasonReact.state: state} => state.nameRef := Js.Null.to_opt theRef;
 
-let component = ReasonReact.reducerComponent "TabAddCity";
+let component = ReasonReact.reducerComponentWithRetainedProps "TabAddCity";
 
-let make ::_message _children => {
+/*
+ submit = () => {
+      if (!this.state.input['country'] || !this.state.input['name']) return
+      const { dispatchAddCity } = this.props;
+      dispatchAddCity(this.state.input)
+      this.setState({ input: {} }, () => {
+        this.props.dispatchUpdateAsyncStorage();
+      })
+      this.nameRef.focus()
+    }
+    */
+let make ::dispatchAddCity ::dispatchUpdateAsyncStorage _children => {
   ...component,
   initialState: fun () => {input: {city: "", country: ""}, nameRef: ref None},
+  /* retainedProps: {dispatchAddCity: Js.t { city: string, country: string}, dispatchUpdateAsyncStorage: int => int}, */
+  retainedProps: {dispatchAddCity, dispatchUpdateAsyncStorage},
   reducer: fun action state =>
     switch action {
     | ChangeCity city => ReasonReact.Update {...state, input: {...state.input, city}}
     | ChangeCountry country => ReasonReact.Update {...state, input: {...state.input, country}}
+    | Submit =>
+      let {input} = state;
+      switch (input.city, input.country) {
+      | ("", "") => ReasonReact.NoUpdate
+      | (city, country) =>
+        ReasonReact.UpdateWithSideEffects
+          {...state, input: {city: "", country: ""}}
+          (
+            fun self => {
+              self.retainedProps.dispatchAddCity {"city": city, "country": country};
+              self.retainedProps.dispatchUpdateAsyncStorage ();
+              ()
+            }
+          )
+          /* ReasonReact.Update state */
+      };
     },
   render: fun self =>
     <View style=styles##container>
@@ -82,76 +117,26 @@ let make ::_message _children => {
         autoCorrect=false
         underlineColorAndroid="transparent"
       />
+      <ButtonElement
+        buttonStyle={"marginTop": 8}
+        title="Submit"
+        backgroundColor="#8e8e8e"
+        onPress=(self.reduce (fun _event => Submit))
+      />
     </View>
 };
 
-/*
-   <Button
-   buttonStyle={{ marginTop: 8 }}
-   title='Submit'
-   backgroundColor='#8e8e8e'
-   onPress={this.submit}
- />
- */
 let tabAddCity =
-  ReasonReact.wrapReasonForJs ::component (fun jsProps => make _message::jsProps##_message [||]);
-/* class CitiesTab extends React.Component {
-     state = {
-       input: {}
-     }
-     updateInput = (key, value) => {
-       this.setState({
-         input: {
-           ...this.state.input,
-           [key]: value,
-         }
-       })
-     }
-     submit = () => {
-       if (!this.state.input['country'] || !this.state.input['name']) return
-       const { dispatchAddCity } = this.props;
-       dispatchAddCity(this.state.input)
-       this.setState({ input: {} }, () => {
-         this.props.dispatchUpdateAsyncStorage();
-       })
-       this.nameRef.focus()
-     }
-     render() {
-       return (
-         <View style=styles.container>
-           <Image
-             resizeMode='contain'
-             style=styles.logo
-             source={require('../../assets/citieslogo.png')}
-           />
-           <TextInput
-             ref={name => this.nameRef = name}
-             value={this.state.input['name']}
-             onChangeText={(value) => this.updateInput('name', value)}
-             style=styles.textInput
-             placeholder='City name'
-             autoCorrect={false}
-             underlineColorAndroid='transparent'
-           />
-           <TextInput
-             value={this.state.input['country']}
-             onChangeText={(value) => this.updateInput('country', value)}
-             style=styles.textInput
-             placeholder='Country name'
-             autoCorrect={false}
-             underlineColorAndroid='transparent'
-           />
-           <Button
-             buttonStyle={{ marginTop: 8 }}
-             title='Submit'
-             backgroundColor='#8e8e8e'
-             onPress={this.submit}
-           />
-         </View>
-       )
-     }
-   }
-
+  ReasonReact.wrapReasonForJs
+    ::component
+    (
+      fun jsProps =>
+        make
+          dispatchAddCity::jsProps##dispatchAddCity
+          dispatchUpdateAsyncStorage::jsProps##dispatchUpdateAsyncStorage
+          [||]
+    );
+/*
    const mapDispatchToProps = (dispatch) => ({
      dispatchAddCity: (city) => dispatch(addCity(city)),
      dispatchUpdateAsyncStorage: () => dispatch(updateAsyncStorage()),
