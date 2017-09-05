@@ -4,7 +4,6 @@ import { Text, View, Image, StyleSheet } from 'react-native';
 import { StackNavigator, TabNavigator } from 'react-navigation';
 
 import CitiesTab from './tabs/Cities/CitiesTab';
-// import AddCityTab from './tabs/AddCity/AddCityTab';
 import { tabAddCity } from '../lib/js/re/tabAddCity';
 
 // TODO move somewhere else
@@ -30,7 +29,6 @@ const TabConfig = {
     }
   },
   AddCityTab: {
-    // screen: AddCityTab,
     screen: tabAddCityConnected,
     navigationOptions: {
       tabBarLabel: 'Add City',
